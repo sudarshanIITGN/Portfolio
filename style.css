@@ -1,0 +1,248 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  width: 100%;
+  height: 100%; /* Ensure html and body take full height */
+  font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  /*background-color: #0a0a0a; /* Fallback background color */
+}
+
+/* Aurora Background (applied directly to body pseudo-elements) */
+body::before,
+body::after {
+  content: '';
+  position: fixed; /* CRUCIAL: Makes them stay in viewport as content scrolls */
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 40% 40%, rgba(27, 77, 8, 0.856), transparent 75%);
+  filter: blur(120px);
+  animation: move 10s ease-in-out infinite alternate;
+  mix-blend-mode: screen;
+  z-index: -1; /* Ensures these are behind all page content */
+}
+body::after {
+  background: radial-gradient(circle at 60% 60%, rgba(7, 33, 70, 0.83), transparent 75%);
+  animation-duration: 14s;
+}
+@keyframes move {
+  0% { transform: translate(0%, 0%) rotate(0deg); }
+  100% { transform: translate(20%, 20%) rotate(30deg); }
+}
+
+/* The first visible section container (formerly .aurora-bg) */
+/* This now acts as the content wrapper for your initial screen */
+.landing-section { /* Renamed from .aurora-bg to avoid confusion with the background effect */
+  position: relative; /* To contain absolutely positioned text groups */
+  height: 100vh; /* Ensures it takes up full viewport height */
+  width: 100vw; /* Ensures it takes up full viewport width */
+  display: flex; /* For centering content within it */
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Hide any content that overflows this section */
+  z-index: 0; /* Ensures this section is above the fixed background */
+}
+
+
+/* Common style for decrypt text groups */
+.decrypt-text-group {
+  position: absolute; /* Relative to .landing-section */
+  z-index: 10; /* Ensures text is above folder content */
+  padding: 10px;
+  color: white;
+  text-align: left;
+}
+
+/* Top-left decrypting text group specific styles */
+#decrypt-text-group {
+  top: 20px;
+  left: 20px;
+}
+
+/* Bottom-right decrypting text group specific styles */
+#decrypt-text-group-bottom-right {
+  bottom: 20px;
+  right: 20px;
+  text-align: right;
+}
+
+
+/* Styles for the individual text elements within any decrypt group */
+.intro-text {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.decrypt-subtext, .decrypt-text-line {
+  margin-bottom: 5px;
+  display: block;
+}
+
+#decrypt-subtext-1, .decrypt-text-line:first-of-type {
+  font-size: 1.5rem;
+}
+
+#decrypt-subtext-2, .smaller-font {
+  font-size: 1rem;
+}
+
+
+/* Content container (for the folder and photos) */
+.content {
+  position: relative; /* Keep relative for folder container */
+  z-index: 1; /* Ensure folder content is above decrypt text groups if they overlap */
+  text-align: center;
+  /* This .content div is now centered by its parent .landing-section */
+}
+
+/* Folder Container */
+.folder-container {
+  position: relative;
+  width: 300px;
+  height: 250px;
+  margin: 0 auto;
+}
+
+/* Photos */
+.photo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140px;
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  z-index: 0;
+}
+
+.photo img {
+  width: 100%;
+}
+.label {
+  display: block;
+  text-align: center;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #220909;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.3s;
+}
+
+/* Folder Image (Top Layer) */
+.folder {
+  position: relative;
+  z-index: 2;
+  width: 300px;
+  height: auto;
+  pointer-events: none;
+}
+
+/* Hover Effects */
+.folder-container:hover .photo1 {
+  transform: translateX(-220px) translateY(-180px);
+  opacity: 1;
+}
+.folder-container:hover .photo2 {
+  transform: translateX(80px) translateY(-180px);
+  opacity: 1;
+}
+.folder-container:hover .photo .label {
+  opacity: 1;
+}
+
+/* Placeholder Section for Scrolling */
+.placeholder-section {
+    min-height: 100vh; /* Ensures this section takes at least full viewport height */
+    background-color: transparent; /* Allows the aurora background to show through */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px; /* Add some padding */
+    position: relative; /* Ensures it forms a new stacking context above body background */
+    z-index: 1; /* Ensures it's above the body's fixed background */
+}
+.placeholder-section h2, .placeholder-section p {
+    margin-bottom: 20px;
+}
+.education-section {
+  padding: 80px 40px;
+  background-color: #0d0d0d;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+}
+
+/* Grid layout for left and right split */
+.education-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.education-entry {
+  background-color: #141414;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edu-image-container {
+  width: 250px;
+  height: 250px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.pixel-image {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+.pixel-image .pixel {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #111;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+/* Text */
+.edu-text {
+  text-align: center;
+}
+.edu-text h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+.edu-text p {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+/* Responsive: Stack vertically on narrow screens */
+@media (max-width: 900px) {
+  .education-grid {
+    grid-template-columns: 1fr;
+  }
+}
